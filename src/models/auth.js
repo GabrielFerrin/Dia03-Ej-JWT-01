@@ -44,10 +44,8 @@ const createSession = (userId) => {
 }
 
 const register = async (userId, email, hash) => {
-  const result = await pool.query(
-    'INSERT INTO login (user_id, email, hash) VALUES (?, ?, ?)',
-    [userId, email, hash]
-  )
+  const query = 'INSERT INTO login (user_id, email, hash) VALUES (?, ?, ?)'
+  const result = await pool.query(query, [userId, email, hash])
   return result
 }
 

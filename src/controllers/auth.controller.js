@@ -17,7 +17,6 @@ const register = async (req, res) => {
   }
   try {
     await authM.register(userId, email, hash)
-    console.log(userId)
     const token = authM.createSession(userId)
     res.status(201)
       .json({ message: 'Usuario encontrado!', userId, token })

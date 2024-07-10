@@ -26,7 +26,8 @@ const login = async ({ email, hash }) => {
     if (response.length === 0) {
       return { sucess: false, status: 401, message: 'Invalid credentials.' }
     }
-    const token = createSession(response[0].userId)
+    console.log(response[0])
+    const token = createSession(response[0].user_id)
     return { sucess: true, status: 200, message: 'Login successful.', token }
   } catch (error) {
     return { sucess: false, status: 500, message: error.message }
@@ -50,4 +51,17 @@ const register = async (userId, email, hash) => {
   return result
 }
 
-export default { login, register, getAllUsers, createSession }
+const me = (token) => {
+  try {
+    const decoded = jwt.verify(token, SECRET)
+    console.log(decoded)
+    return { success: true, status: 200, userId: decoded.userId }
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return { success: false, status: 401, message: 'Session expired.' }
+    }
+    return { success: false, status: 500, message: error.message }
+  }
+}
+
+export default { login, register, getAllUsers, createSession, me }

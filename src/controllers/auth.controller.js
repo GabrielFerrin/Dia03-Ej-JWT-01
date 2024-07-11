@@ -11,18 +11,19 @@ const login = async (req, res) => {
 }
 
 const register = async (req, res) => {
-  const { userId, email, hash } = req.body
-  if (!userId || !email || !hash) {
-    return res.status(401).json({ message: 'Invalid credentials.' })
+  const { names, email, hash } = req.body
+  console.log(req.body)
+  if (!names || !email || !hash) {
+    return res.status(401).json({ message: 'Faltan datos.' })
   }
   try {
-    await authM.register(userId, email, hash)
-    const token = authM.createSession(userId)
+    await authM.register(names, email, hash)
+    const token = authM.createSession(names)
     res.status(201)
-      .json({ message: 'Usuario encontrado!', userId, token })
+      .json({ success: true, message: 'Usuario encontrado!', names, token })
   } catch (error) {
     res.status(500)
-      .json({ message: 'Usuario incorrecto', error: error.stack })
+      .json({ success: false, message: 'Error al registrar usuario', error: error.message })
   }
 }
 

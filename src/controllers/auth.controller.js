@@ -12,7 +12,6 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   const { names, email, hash } = req.body
-  console.log(req.body)
   if (!names || !email || !hash) {
     return res.status(401).json({ message: 'Faltan datos.' })
   }

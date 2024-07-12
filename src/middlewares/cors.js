@@ -3,7 +3,6 @@ const allowedOrigins = new Set([
 ])
 
 export const corsMiddleware = (req, res, next) => {
-  console.log('ejecutado!')
   const origin = req.headers.origin || req.headers.host
   const isAllowed = allowedOrigins.has(origin)
 
